@@ -1,0 +1,49 @@
+#!/bin/bash
+
+FILE=pre-commit-config
+
+if [ ! -f $FILE ]; then
+   echo "File $FILE does not exist."
+fi
+
+source $FILE
+
+if [ -n "$PHPCS_COMMAND" ]; then
+    PHPCS_OUTPUT=$($PHPCS_COMMAND)
+    PHPCS_RETVAL=$?
+
+    if [ $PHPCS_RETVAL -ne 0 ]; then
+        echo "======================================="
+	    echo "              PHPCS Errors             "
+	    echo "======================================="
+        echo "$PHPCS_OUTPUT"
+        exit 1
+    fi
+fi
+
+
+if [ -n "$PHPMD_COMMAND" ]; then
+    PHPMD_OUTPUT=$($PHPMD_COMMAND)
+    PHPMD_RETVAL=$?
+
+    if [ $PHPMD_RETVAL -ne 0 ]; then
+        echo "======================================="
+	    echo "              PHPMD Errors             "
+	    echo "======================================="
+        echo "$PHPMD_OUTPUT"
+        exit 1
+    fi
+fi
+
+if [ -n "$SCSS_LINT_COMMAND" ]; then
+    SCSS_LINT_OUTPUT=$($SCSS_LINT_COMMAND)
+    SCSS_LINT_RETVAL=$?
+
+    if [ $SCSS_LINT_RETVAL -ne 0 ]; then
+        echo "======================================="
+	    echo "                SCSS Lint              "
+	    echo "======================================="
+        echo "$SCSS_LINT_OUTPUT"
+        exit 1
+    fi
+fi
