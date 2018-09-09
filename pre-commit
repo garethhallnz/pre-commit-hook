@@ -73,3 +73,16 @@ if [ -n "$CYPRESS_COMMAND" ]; then
         exit 1
     fi
 fi
+
+if [ -n "$ESLINT_COMMAND" ]; then
+    ESLINT_OUTPUT=$($ESLINT_COMMAND)
+    ESLINT_RETVAL=$?
+
+    if [ $ESLINT_RETVAL -ne 0 ]; then
+        echo "======================================="
+	    echo "              ESLINT Errors           "
+	    echo "======================================="
+        echo "$ESLINT_OUTPUT"
+        exit 1
+    fi
+fi
