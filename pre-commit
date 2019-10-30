@@ -61,6 +61,19 @@ if [ -n "$SCSS_LINT_COMMAND" ]; then
     fi
 fi
 
+if [ -n "$STYLELINT_COMMAND" ]; then
+    STYLELINT_OUTPUT=$($STYLELINT_COMMAND)
+    STYLELINT_RETVAL=$?
+
+    if [ $STYLELINT_RETVAL -ne 0 ]; then
+        echo "======================================="
+	    echo "              STYLELINT_COMMAND Errors           "
+	    echo "======================================="
+        echo "$STYLELINT_OUTPUT"
+        exit 1
+    fi
+fi
+
 if [ -n "$CYPRESS_COMMAND" ]; then
     CYPRESS_OUTPUT=$($CYPRESS_COMMAND)
     CYPRESS_RETVAL=$?
