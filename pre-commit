@@ -48,6 +48,19 @@ if [ -n "$PHPUNIT_COMMAND" ]; then
     fi
 fi
 
+if [ -n "$DRUPALCHECK_COMMAND" ]; then
+    DRUPALCHECK_OUTPUT=$($DRUPALCHECK_COMMAND)
+    DRUPALCHECK_RETVAL=$?
+
+    if [ $DRUPALCHECK_RETVAL -ne 0 ]; then
+        echo "======================================="
+	    echo "            DRUPALCHECK Errors             "
+	    echo "======================================="
+        echo "$DRUPALCHECK_OUTPUT"
+        exit 1
+    fi
+fi
+
 if [ -n "$SCSS_LINT_COMMAND" ]; then
     SCSS_LINT_OUTPUT=$($SCSS_LINT_COMMAND)
     SCSS_LINT_RETVAL=$?
