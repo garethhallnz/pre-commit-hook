@@ -61,6 +61,19 @@ if [ -n "$DRUPALCHECK_COMMAND" ]; then
     fi
 fi
 
+if [ -n "$SYMFONYSECURITY_COMMAND" ]; then
+    SYMFONYSECURITY_OUTPUT=$($SYMFONYSECURITY_COMMAND)
+    SYMFONYSECURITY_RETVAL=$?
+
+    if [ $SYMFONYSECURITY_RETVAL -ne 0 ]; then
+        echo "======================================="
+	    echo "            SYMFONYSECURITY Errors             "
+	    echo "======================================="
+        echo "$SYMFONYSECURITY_OUTPUT"
+        exit 1
+    fi
+fi
+
 if [ -n "$SCSS_LINT_COMMAND" ]; then
     SCSS_LINT_OUTPUT=$($SCSS_LINT_COMMAND)
     SCSS_LINT_RETVAL=$?
